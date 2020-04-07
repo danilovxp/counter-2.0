@@ -1,24 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
 function App() {
+      const [count, setCount] = useState('');
+      const [todo, setTodo] = useState([]);
+      const todoChange = (n) => {
+            setCount(+n);
+            // arr.push(n)
+    };
+
+      const changeValue = (change, i) => {
+          let arr = [...todo];
+          arr[i] += change;
+          setTodo(arr);
+      };
+
+      const todoSent = () => {
+            let arr = [...todo];
+            arr.push(count);
+            setTodo([...arr]);
+            setCount('');
+      };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+
+        <p>Click on button</p>
+        <input type="number"
+               placeholder="write numbers here"
+               value={count}
+               onChange={(e) => todoChange(e.target.value)}/>
+    <div>
+        {todo.map((el, i) =>
+            <div>
+
+                <button onClick={() => changeValue (-3, i)}> -3</button>
+                <button onClick={() => changeValue (-2, i)}> -2</button>
+                <button onClick={() => changeValue (-1, i)}> -1</button>
+                {el}
+                <button onClick={() => changeValue (+1, i)}> +1</button>
+                <button onClick={() => changeValue (+2, i)}> +2</button>
+                <button onClick={() => changeValue (+3, i)}> +3</button>
+
+            </div>
+        )}
+
+        <div><button onClick={todoSent}>add</button></div>
+    </div>
+
     </div>
   );
 }
